@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Set the current year in the footer
+  
     document.getElementById('current-year').textContent = new Date().getFullYear();
     
-    // Get DOM elements
+   
     const startButton = document.getElementById('start-button');
     const subjectSelector = document.getElementById('subject-selector');
     const quizContainer = document.getElementById('quiz-container');
@@ -17,21 +17,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const shortAnswer = document.getElementById('short-answer');
     const shortAnswerInput = document.getElementById('short-answer-input');
     
-    // Quiz state
+
     let selectedSubjects = [];
     let quizQuestions = [];
     let currentQuestionIndex = 0;
     let userAnswers = [];
-    
-    // Event listeners
+
     startButton.addEventListener('click', startQuiz);
     prevButton.addEventListener('click', showPreviousQuestion);
     nextButton.addEventListener('click', handleNextButton);
     restartButton.addEventListener('click', restartQuiz);
     
-    // Functions
+
     function startQuiz() {
-      // Get selected subjects
+
       const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
       if (checkboxes.length === 0) {
         alert('Please select at least one subject');
@@ -39,8 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       
       selectedSubjects = Array.from(checkboxes).map(checkbox => checkbox.value);
-      
-      // Generate quiz questions
+
       quizQuestions = [];
       selectedSubjects.forEach(subject => {
         if (quizData[subject]) {
@@ -48,13 +46,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
       
-      // Shuffle the questions
+
       quizQuestions = shuffleArray(quizQuestions);
       
-      // Initialize user answers array
+
       userAnswers = Array(quizQuestions.length).fill(null);
       
-      // Start the quiz
+
       currentQuestionIndex = 0;
       subjectSelector.classList.remove('active');
       subjectSelector.classList.add('hidden');
@@ -66,10 +64,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function showQuestion(index) {
       const question = quizQuestions[index];
       
-      // Update question number and subject
+
       questionNumber.textContent = `Question ${index + 1} of ${quizQuestions.length}`;
       
-      // Find the subject this question belongs to
+
       for (const subject in quizData) {
         if (quizData[subject].some(q => q.id === question.id)) {
           questionSubject.textContent = `Subject: ${subject}`;
@@ -77,18 +75,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
       
-      // Update question text
+
       questionText.textContent = question.question;
       
-      // Show appropriate answer type
+
       if (question.type === 'multiple-choice') {
         multipleChoice.classList.remove('hidden');
         shortAnswer.classList.add('hidden');
         
-        // Clear previous options
+
         multipleChoice.innerHTML = '';
         
-        // Add options
+
         question.options.forEach((option, optionIndex) => {
           const optionDiv = document.createElement('div');
           optionDiv.className = 'option';
@@ -99,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
           input.id = `option${optionIndex + 1}`;
           input.value = optionIndex;
           
-          // Check if user has already answered this question
+
           if (userAnswers[index] !== null && userAnswers[index].toString() === optionIndex.toString()) {
             input.checked = true;
           }
@@ -116,11 +114,11 @@ document.addEventListener('DOMContentLoaded', function() {
         multipleChoice.classList.add('hidden');
         shortAnswer.classList.remove('hidden');
         
-        // Set previous answer if exists
+
         shortAnswerInput.value = userAnswers[index] || '';
       }
       
-      // Update navigation buttons
+
       prevButton.disabled = index === 0;
       if (index === quizQuestions.length - 1) {
         nextButton.textContent = 'Finish Quiz';
@@ -160,13 +158,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function finishQuiz() {
-      // Hide quiz container and show results
+  
       quizContainer.classList.remove('active');
       quizContainer.classList.add('hidden');
       resultsContainer.classList.remove('hidden');
       resultsContainer.classList.add('active');
       
-      // Calculate results
+
       const results = calculateResults();
       displayResults(results);
     }
@@ -179,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
         detailedResults: []
       };
       
-      // Initialize subject results
+
       selectedSubjects.forEach(subject => {
         results.subjectResults[subject] = {
           total: 0,
@@ -187,12 +185,12 @@ document.addEventListener('DOMContentLoaded', function() {
         };
       });
       
-      // Calculate scores
+
       quizQuestions.forEach((question, index) => {
         let isCorrect = false;
         let subjectName = '';
         
-        // Find which subject this question belongs to
+
         for (const subject in quizData) {
           if (quizData[subject].some(q => q.id === question.id)) {
             subjectName = subject;
@@ -202,15 +200,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         if (question.type === 'multiple-choice') {
-          // For multiple choice, we have a definitive correct answer
+
           if (userAnswers[index] !== null && parseInt(userAnswers[index]) === question.correctAnswer) {
             isCorrect = true;
             results.correctAnswers++;
             results.subjectResults[subjectName].correct++;
           }
         } else if (question.type === 'short-answer') {
-          // For short answer, we need manual grading in a real app
-          // For demo purposes, we'll count non-empty answers as "partially correct"
+    
           if (userAnswers[index] && userAnswers[index].trim().length > 0) {
             isCorrect = 'partial';
             results.correctAnswers += 0.5;
@@ -218,7 +215,7 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         }
         
-        // Add detailed result
+
         results.detailedResults.push({
           question: question.question,
           userAnswer: question.type === 'multiple-choice' && userAnswers[index] !== null 
@@ -237,12 +234,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function displayResults(results) {
-      // Display overall score
+ 
       const scorePercentage = Math.round((results.correctAnswers / results.totalQuestions) * 100);
       document.getElementById('score-percentage').textContent = `${scorePercentage}%`;
       document.getElementById('score-fraction').textContent = `${results.correctAnswers}/${results.totalQuestions}`;
       
-      // Display subject-specific results
+
       const subjectsSummary = document.getElementById('subjects-summary');
       subjectsSummary.innerHTML = '';
       
@@ -271,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
       
-      // Display detailed results
+
       const detailsList = document.getElementById('results-details-list');
       detailsList.innerHTML = '';
       
@@ -326,26 +323,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function restartQuiz() {
-      // Clear previous selections
+
       const checkboxes = document.querySelectorAll('input[type="checkbox"]');
       checkboxes.forEach(checkbox => {
         checkbox.checked = false;
       });
       
-      // Reset state
+
       selectedSubjects = [];
       quizQuestions = [];
       currentQuestionIndex = 0;
       userAnswers = [];
       
-      // Show subject selector
       resultsContainer.classList.remove('active');
       resultsContainer.classList.add('hidden');
       subjectSelector.classList.remove('hidden');
       subjectSelector.classList.add('active');
     }
-    
-    // Utility function to shuffle array
+
     function shuffleArray(array) {
       const shuffled = [...array];
       for (let i = shuffled.length - 1; i > 0; i--) {

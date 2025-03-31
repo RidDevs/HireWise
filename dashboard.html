@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills Quiz Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --light-bg: #f3f4f6;
+            --dark-text: #1f2937;
+            --light-text: #6b7280;
+            --border-color: #e5e7eb;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .dashboard-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .dashboard-card h2 {
+            color: var(--primary);
+            margin-top: 0;
+            font-size: 18px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--light-text);
+        }
+        
+        .skill-progress {
+            margin-bottom: 15px;
+        }
+        
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .skill-bar {
+            height: 8px;
+            background-color: var(--light-bg);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .skill-fill {
+            height: 100%;
+            background-color: var(--primary);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        th {
+            background-color: var(--light-bg);
+            font-weight: 600;
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+            margin: 0 10px;
+        }
+        
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #2962ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: #0039cb;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .full-width {
+            grid-column: span 2;
+        }
+    </style>
+</head>
+<body>
+    <a href="homenew.html" class="back-button">← Back to home</a>
+    <div class="container">
+        <header>
+            <h1>Skills Assessment Dashboard</h1>
+            <p>Analytics and insights based on all quiz attempts</p>
+        </header>
+        
+        <div class="dashboard-grid">
+            <h2 id="usernameDisplay"></h2>
+            <h2 id="emailDisplay"></h2>
+            <div class="dashboard-card">
+                <h2>Overall Statistics</h2>
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalQuizzes">0</div>
+                        <div class="stat-label">Total Quizzes</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="avgScore">0%</div>
+                        <div class="stat-label">Average Score</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalSkills">0</div>
+                        <div class="stat-label">Skills Assessed</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h2>Skill Performance</h2>
+                <div id="skillPerformance">
+                    <!-- Skill bars will be inserted here -->
+                    <div class="loading-message">No data available yet</div>
+                </div>
+            </div>
+            
+            <div class="dashboard-card full-width">
+                <h2>Recent Quiz Results</h2>
+                <div id="recentResults">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Skills</th>
+                                <th>Score</th>
+                                <th>Questions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsTableBody">
+                            <!-- Recent results will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="button-container">
+            <button id="resetDataBtn">Reset All Data</button>
+            <button id="takeQuizBtn">Take Another Quiz</button>
+        </div>
+    </div>
+    
+    <script src="quizAnalytics.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const analytics = window.quizAnalytics.getQuizAnalytics();
+            
+            // Update overall statistics
+            document.getElementById('totalQuizzes').textContent = analytics.totalQuizzes;
+            
+            const skillsCount = Object.keys(analytics.skillScores).length;
+            document.getElementById('totalSkills').textContent = skillsCount;
+            
+            // Calculate average score
+            let totalCorrect = 0;
+            let totalQuestions = 0;
+            
+            for (const skill in analytics.skillScores) {
+                totalCorrect += analytics.skillScores[skill].correctAnswers;
+                totalQuestions += analytics.skillScores[skill].totalQuestions;
+            }
+            
+            const avgScore = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+            document.getElementById('avgScore').textContent = avgScore + '%';
+            
+            // Render skill performance
+            const skillPerformanceEl = document.getElementById('skillPerformance');
+            if (skillsCount > 0) {
+                skillPerformanceEl.innerHTML = '';
+                
+                for (const skill in analytics.skillScores) {
+                    const skillData = analytics.skillScores[skill];
+                    const successRate = skillData.totalQuestions > 0 
+                        ? Math.round((skillData.correctAnswers / skillData.totalQuestions) * 100) 
+                        : 0;
+                    
+                    const skillHtml = `
+                        <div class="skill-progress">
+                            <div class="skill-name">
+                                <span>${skill}</span>
+                                <span>${successRate}%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: ${successRate}%"></div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    skillPerformanceEl.innerHTML += skillHtml;
+                }
+            } else {
+                skillPerformanceEl.innerHTML = '<div class="loading-message">No skill data available yet</div>';
+            }
+
+            
+            
+            // Render recent results
+            const resultsTableBody = document.getElementById('resultsTableBody');
+            if (analytics.recentResults.length > 0) {
+                resultsTableBody.innerHTML = '';
+                
+                analytics.recentResults.forEach(result => {
+                    const skillsList = result.skillResults
+                        .map(s => s.skill)
+                        .filter((v, i, a) => a.indexOf(v) === i) // Unique skills
+                        .join(', ');
+                    
+                    const row = `
+                        <tr>
+                            <td>${result.date}</td>
+                            <td>${skillsList}</td>
+                            <td>${result.score}%</td>
+                            <td>${result.totalQuestions}</td>
+                        </tr>
+                    `;
+                    
+                    resultsTableBody.innerHTML += row;
+                });
+            } else {
+                resultsTableBody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No quiz results available yet</td></tr>';
+            }
+            
+            // Add event listeners
+            document.getElementById('resetDataBtn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to reset all dashboard data? This cannot be undone.')) {
+                    window.quizAnalytics.clearQuizAnalytics();
+                    location.reload();
+                }
+            });
+            
+            document.getElementById('takeQuizBtn').addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+    <script src="userProfile.js"></script>
+    
+    <script type="module" src="dashboard_auth.js"></script>
+
+    <script type="module">
+        import { auth, onAuthStateChanged } from './firebase-config.js';
+        const emailDisplay = document.getElementById('emailDisplay');
+        const usernameDisplay = document.getElementById('usernameDisplay');
+        const logoutButton = document.getElementById('logoutButton');
+        const loginButton = document.getElementById('loginButton');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                emailDisplay.textContent = `Email: ${user.email}`;
+                usernameDisplay.textContent = user.displayName ? `Welcome, ${user.displayName}` : `Welcome, User`;
+                logoutButton.style.display = 'inline';
+                loginButton.style.display = 'none';
+            } else {
+                emailDisplay.textContent = '';
+                usernameDisplay.textContent = '';
+                logoutButton.style.display = 'none';
+                loginButton.style.display = 'inline';
+            }
+        });
+    </script>
+</body>
+</html>
