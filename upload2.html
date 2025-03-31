@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Skill Extractor</title>
+    <link rel="stylesheet" href="styleupload.css">
+    
+</head>
+<body>
+    <a href="homenew.html" class="back-button">← Back to home</a>
+    <div class="container">
+        <header>
+            <h1>Resume Skill Extractor</h1>
+            <p>Upload your resume and we'll extract the skills automatically</p>
+        </header>
+        
+        <div class="card">
+            
+            <div class="upload-area">
+                <div id="dropZone" class="drop-zone">
+                    <i class="fas fa-file-upload icon"></i>
+                    <p>Drag & drop your resume PDF here</p>
+                    <p class="or-text">- OR -</p>
+                    <label for="resumeInput" class="browse-btn">Browse Files</label>
+                    <input type="file" id="resumeInput" accept="application/pdf" hidden>
+                    <p id="fileName" class="file-name"></p>
+                </div>
+                <button id="submitBtn" class="submit-btn">Upload & Analyze</button>
+            </div>
+
+            <div id="loadingContainer" class="loading-container hidden">
+                <div class="spinner"></div>
+                <p>Analyzing your resume...</p>
+            </div>
+
+            <div id="skillsContainer" class="skills-container hidden">
+                <h2>Extracted Skills</h2>
+                <div id="skillsTags" class="skills-tags"></div>
+            </div>
+
+            <div id="errorMessage" class="error-message hidden"></div>
+        </div>
+        
+        <footer>
+            <p>© HireWise @2025</p>
+        </footer>
+    </div>
+
+    <div id="toast" class="toast hidden">
+        <div class="toast-content">
+            <i id="toast-icon" class="fas fa-check-circle"></i>
+            <span id="toast-message">Success!</span>
+        </div>
+    </div>
+
+    <script src="script2.js">
+        
+    </script>
+</body>
+</html>
