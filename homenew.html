@@ -74,7 +74,7 @@
             display: flex;
             gap: 80px;
             margin-top: 200px;
-           
+
         }
 
         .feature {
@@ -156,6 +156,27 @@
             transform: translateY(-3px);
         }
 
+        .about-us, .contact-us {
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .about-us h2, .contact-us h2 {
+            font-size: 36px;
+            color: #f9a826;
+            margin-bottom: 20px;
+        }
+
+        .about-us p, .contact-us p {
+            font-size: 18px;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -215,13 +236,25 @@
         </section>
     </div>
 
+    <section class="about-us">
+        <h2>About Us</h2>
+        <p>HireWise is a leading platform dedicated to revolutionizing the hiring process through AI-driven solutions. Our mission is to empower both job seekers and employers by providing smart tools for resume analysis, skill assessments, and more. We strive to make the hiring process efficient, fair, and effective for everyone involved.</p>
+    </section>
+
+    <section class="contact-us">
+        <h2>Contact Us</h2>
+        <p>Have questions or need assistance? Feel free to reach out to our team. We're here to help you with any inquiries you might have about our services.</p>
+        <p>Email: <a href="mailto:contact@hirewise.com" style="color: #f9a826;">contact@hirewise.com</a></p>
+        <p>Phone: <a href="tel:+1234567890" style="color: #f9a826;">+1 (234) 567-890</a></p>
+    </section>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const navLinks = document.querySelectorAll("nav a");
 
             navLinks.forEach(link => {
                 link.addEventListener("click", function (event) {
-                    
+
                 });
             });
         });
