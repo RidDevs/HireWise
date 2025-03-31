@@ -74,7 +74,6 @@
             display: flex;
             gap: 80px;
             margin-top: 200px;
-
         }
 
         .feature {
@@ -112,7 +111,8 @@
             margin-bottom: 0px;
             right: 80px;
             width: 3000px;
-        }
+            aspect-ratio: auto;
+            pointer-events: none;        }
 
         .container {
             display: flex;
@@ -158,56 +158,19 @@
             transform: translateY(-3px);
         }
 
-        .about-us, .feedback {
-            padding: 40px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            margin: 20px auto;
-            max-width: 800px;
-            text-align: center;
-        }
-
-        .about-us h2, .feedback h2 {
-            font-size: 36px;
-            color: #f9a826;
-            margin-bottom: 20px;
-        }
-
-        .about-us p, .feedback p {
+        #logoutButton {
+            color: rgb(169, 103, 9);
             font-size: 18px;
-            color: #ccc;
-            margin-bottom: 20px;
-        }
-
-        .feedback-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .feedback-form input, .feedback-form textarea {
-            padding: 10px;
+            background-color: transparent;
             border: none;
-            border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            font-size: 16px;
-        }
-
-        .feedback-form button {
-            background-color: #f9a826;
-            color: #0a1426;
-            padding: 15px;
-            border: none;
-            border-radius: 5px;
             cursor: pointer;
-            font-size: 18px;
-            transition: background-color 0.3s, transform 0.3s;
+            transition: color 0.3s;
+            margin: 0 15px;
+            text-decoration: none;
         }
 
-        .feedback-form button:hover {
-            background-color: #ffb74d;
-            transform: translateY(-3px);
+        #logoutButton:hover {
+            color: rgb(140, 85, 7);
         }
 
         @keyframes fadeIn {
@@ -218,19 +181,10 @@
                 opacity: 1;
             }
         }
-            #logoutButton {
-        color: rgb(169, 103, 9);
-        font-size: 18px;
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        transition: color 0.3s;
-        margin: 0 15px;
-        text-decoration: none;
-        }
-
-        #logoutButton:hover {
-        color: rgb(140, 85, 7); /* Slightly darker shade for hover effect */
+        #usernameDisplay {
+            color: #f9a826;
+            margin: 0 15px;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -242,15 +196,16 @@
             <a href="upload2.html">User Resume upload-(and test)</a>
             <a href="upload.html">Skill Checker</a>
             <a href="dashboard/index.html">HR Dashboard</a>
+            <a href="contact.html">Contact us</a>
             <a href="login.html">Login/Sign-up</a>
             <button id="logoutButton">Logout</button>
+            <span id="usernameDisplay"></span>
         </nav>
     </header>
     <section class="hero">
         <div class="hero-text">
             <h2>Smart Hiring Starts Here</h2>
             <p>Analyze resumes, assess skills, test yourself and hire the best talent with AI-powered precision.</p>
-
             <div class="features">
                 <div class="feature">
                     <span>📊</span>
@@ -268,49 +223,32 @@
         </div>
         <div class="hero-image"></div>
     </section>
-
     <div class="container">
         <section class="upload-section">
             <img src="upload1.jpg" alt="Upload Icon">
             <h3>Upload Your Resume</h3>
             <button class="upload-button" onclick="window.location.href='upload2.html'">User Resume Upload</button>
         </section>
-
         <section class="info-section">
             <img src="dashboard.jpg" alt="Dashboard Icon">
             <h3>HR Dashboard</h3>
             <button class="dashboard-button" onclick="window.location.href='dashboard/index.html'">Go to Dashboard</button>
         </section>
     </div>
-
-    <section class="about-us">
-        <h2>About Us</h2>
-        <p>HireWise is a leading platform dedicated to revolutionizing the hiring process through AI-driven solutions. Our mission is to empower both job seekers and employers by providing smart tools for resume analysis, skill assessments, and more. We strive to make the hiring process efficient, fair, and effective for everyone involved.</p>
-    </section>
-
-    <section class="feedback">
-        <h2>Feedback</h2>
-        <p>We value your feedback! Please share your thoughts and suggestions to help us improve our services.</p>
-
-        <form class="feedback-form">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <textarea name="feedback" placeholder="Your Feedback" required></textarea>
-            <button type="submit">Submit Feedback</button>
-        </form>
-    </section>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const navLinks = document.querySelectorAll("nav a");
-
-            navLinks.forEach(link => {
-                link.addEventListener("click", function (event) {
-
-                });
-            });
-        });
-    </script>
     <script type="module" src="authCheck.js"></script>
     <script type="module" src="logout.js"></script>
+    <script type="module">
+        import { auth, onAuthStateChanged } from './firebase-config.js'; 
+        const usernameDisplay = document.getElementById('usernameDisplay');
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const uid = user.uid;
+                usernameDisplay.textContent = user.displayName ? `Welcome, ${user.displayName}` : `Welcome, User`; 
+                // ...
+            } else {
+                usernameDisplay.textContent = ''; 
+            }
+        });
+    </script>
 </body>
 </html>
