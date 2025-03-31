@@ -186,6 +186,11 @@
             margin: 0 15px;
             font-size: 18px;
         }
+        #emailDisplay {
+            color: #f9a826;
+            margin: 0 15px;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -200,6 +205,9 @@
             <a href="login.html">Login/Sign-up</a>
             <button id="logoutButton">Logout</button>
             <span id="usernameDisplay"></span>
+            
+            <span id="emailDisplay"></span>
+            
         </nav>
     </header>
     <section class="hero">
@@ -235,20 +243,35 @@
             <button class="dashboard-button" onclick="window.location.href='dashboard/index.html'">Go to Dashboard</button>
         </section>
     </div>
-    <script type="module" src="authCheck.js"></script>
+    <script type="module" src="auth.js"></script>
     <script type="module" src="logout.js"></script>
+    
     <script type="module">
-        import { auth, onAuthStateChanged } from './firebase-config.js'; 
-        const usernameDisplay = document.getElementById('usernameDisplay');
+        import { auth, onAuthStateChanged } from './firebase-config.js';
+        const emailDisplay = document.getElementById('emailDisplay');
+
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                const uid = user.uid;
-                usernameDisplay.textContent = user.displayName ? `Welcome, ${user.displayName}` : `Welcome, User`; 
-                // ...
+                emailDisplay.textContent = `Email: ${user.email}`; 
             } else {
-                usernameDisplay.textContent = ''; 
+                emailDisplay.textContent = '';
             }
         });
     </script>
+
+
+<script type="module">
+    import { auth, onAuthStateChanged } from './firebase-config.js';
+    const usernameDisplay = document.getElementById('usernameDisplay');
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            const uid = user.uid;
+            usernameDisplay.textContent = user.displayName ? `Welcome, ${user.displayName}` : `Welcome,  ${user.displayName}`; 
+        } else {
+            usernameDisplay.textContent = ''; 
+        }
+    });
+</script>
+
 </body>
 </html>
