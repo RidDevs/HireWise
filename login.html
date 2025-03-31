@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireWise - Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #0a1426;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('background1.jpg'); 
+            background-size: cover;
+            background-position: center;
+            backdrop-filter:blur(4px) ;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            width: 300px;
+            
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 20px;
+            margin-left: 100px;
+            align-self: center;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          align-items: center;
+        }
+
+        .login-container h2 {
+            color: #f79824;
+            margin-bottom: 20px;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .login-container button {
+            background-color: #f9a826;
+            color: #0a1426;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            width: 120px;
+            font-size: 20px;
+            height: 30px;
+            margin-top: 20px;
+        }
+
+        .login-container button:hover {
+            background-color: #ffb74d;
+            transform: translateY(-3px);
+        }
+
+        .login-container a {
+            color: #f9a826;
+            text-decoration: none;
+            margin-top: 23px;
+            display: inline-block;
+        }
+
+        .login-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <img src="logo.png" alt="HireWise Logo">
+        </div>
+        <h2>Login to HireWise</h2>
+        <form method="post" id="loginForm">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <a href="signup.html">Don't have an account? Sign up</a>
+    </div>
+    <script type="module" src="login.js"></script>
+</body>
+</html>
+

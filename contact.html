@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        .body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        .navbar {
+            background-color: #007bff;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #2962ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: #0039cb;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        
+        .contact-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .contact-container h1 {
+            color: #007bff;
+        }
+        
+        .contact-container p {
+            font-size: 16px;
+        }
+        
+        /* Form Styles */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: left;
+        }
+        
+        .contact-form label {
+            font-weight: bold;
+        }
+        
+        .contact-form input, 
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .contact-form button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        .contact-form button:hover {
+            background-color: #0056b3;
+        }
+        
+        .logo {
+            height: 80px;
+            width: auto;
+        }
+        
+        
+        .contact-form label[for="messageType"] {
+            font-weight: bold; 
+        }
+        </style>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+
+<body>
+
+    <a href="homenew.html" class="back-button">← Back to home</a>
+    
+    <div class="navbar">
+        <img src="hirewise.png" alt="Logo" class="logo">
+        <a href="contact.html"><h1>Contact Us</h1></a>
+    </div>
+
+    <div class="contact-container">
+        <h1>Contact Us</h1>
+        <p>If you have any questions,and feedback feel free to reach out!</p>
+        <h2>Contact Email: HireWise.ai@gmail.com</h2>
+
+        <form class="contact-form" onsubmit="sendEmail(event)">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" required>
+        
+            <label for="email">Your Email:</label>
+            <input type="email" id="email" name="email" required>
+        
+            <label for="category">Message Type:</label>
+            <select id="category" name="category" required>
+                <option value="">Select an option</option>
+                <option value="query">Query</option>
+                <option value="feedback">Feedback</option>
+                <option value="complaint">Complaint</option>
+            </select>
+        
+            <label for="message">Your Message:</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+        
+            <button type="submit">Send Message</button>
+        </form>
+        
+        </form>
+    </div>
+
+    <script>
+        (function() {
+            emailjs.init("OM0lJ5m264st9nSfD"); 
+        })();
+
+        function sendEmail(event) {
+            event.preventDefault();
+            console.log("Sending email...");
+
+            emailjs.sendForm("service_ky8g1bb", "template_qaacjhs", event.target)
+            .then(function(response) {
+                console.log("Success:", response);
+                alert("Message sent successfully!");
+                document.querySelector(".contact-form").reset();
+            }, function(error) {
+                console.error("Error:", error);
+                alert("Failed to send message. Check console for details.");
+            });
+        }
+    </script>
+
+</body>
+</html>
