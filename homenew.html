@@ -123,7 +123,8 @@
             right: 80px;
             width: 3000px;
             aspect-ratio: auto;
-            pointer-events: none;        }
+            pointer-events: none;
+        }
 
         .container {
             display: flex;
@@ -170,7 +171,7 @@
             transform: translateY(-3px);
         }
 
-        #logoutButton {
+        #logoutButton, #loginButton {
             color: rgb(169, 103, 9);
             font-size: 18px;
             background-color: transparent;
@@ -181,7 +182,7 @@
             text-decoration: none;
         }
 
-        #logoutButton:hover {
+        #logoutButton:hover, #loginButton:hover {
             color: rgb(140, 85, 7);
         }
 
@@ -193,7 +194,6 @@
                 opacity: 1;
             }
         }
-        
     </style>
 </head>
 <body>
@@ -205,12 +205,11 @@
             <a href="upload.html">Skill Checker</a>
             <a href="dashboard/index.html">HR Dashboard</a>
             <a href="contact.html">Contact us</a>
-            <a href="login.html">Login/Sign-up</a>
-            <button id="logoutButton">Logout</button>
+            <button id="logoutButton" style="display: none;">Logout</button>
+            <a href="login.html" id="loginButton" style="display: none;">Login/Sign-up</a>
             <br><br>
             <span id="usernameDisplay"></span>
             <span id="emailDisplay"></span>
-            
         </nav>
     </header>
     <section class="hero">
@@ -248,33 +247,27 @@
     </div>
     <script type="module" src="auth.js"></script>
     <script type="module" src="logout.js"></script>
-    
+
     <script type="module">
         import { auth, onAuthStateChanged } from './firebase-config.js';
         const emailDisplay = document.getElementById('emailDisplay');
+        const usernameDisplay = document.getElementById('usernameDisplay');
+        const logoutButton = document.getElementById('logoutButton');
+        const loginButton = document.getElementById('loginButton');
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                emailDisplay.textContent = `Email: ${user.email}`; 
+                emailDisplay.textContent = `Email: ${user.email}`;
+                usernameDisplay.textContent = user.displayName ? `Welcome, ${user.displayName}` : `Welcome, User`;
+                logoutButton.style.display = 'inline';
+                loginButton.style.display = 'none';
             } else {
                 emailDisplay.textContent = '';
+                usernameDisplay.textContent = '';
+                logoutButton.style.display = 'none';
+                loginButton.style.display = 'inline';
             }
         });
     </script>
-
-
-<script type="module">
-    import { auth, onAuthStateChanged } from './firebase-config.js';
-    const usernameDisplay = document.getElementById('usernameDisplay');
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            const uid = user.uid;
-            usernameDisplay.textContent = user.displayName ? `Welcome, ${user.displayName}` : `Welcome,  ${user.displayName}`; 
-        } else {
-            usernameDisplay.textContent = ''; 
-        }
-    });
-</script>
-
 </body>
 </html>
