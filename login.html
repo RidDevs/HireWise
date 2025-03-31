@@ -88,9 +88,30 @@
         .login-container a:hover {
             text-decoration: underline;
         }
+        .back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #2962ff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.back-button:hover {
+    background-color: #0039cb;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
     </style>
 </head>
 <body>
+    <a href="homenew.html" class="back-button">← Back to home</a>
     <div class="login-container">
         <div class="logo">
             <img src="logo.png" alt="HireWise Logo">
